@@ -28,7 +28,41 @@ class BST:
         elif data<root.item:#if data is less than root then search in left sub tree
             return self.rsearch(root.left,data)
         elif data>root.item:#if  data is greater than root then search in right sub tree
-            return self.rsearch(root.right,data)   
+            return self.rsearch(root.right,data)
+        
+    def min_value(self,root):
+            current=root
+            while current.left is not None:
+                current=current.left
+            return current.item    
+    
+    def max_value(self,root):
+            current=root
+            while current.right is not None:
+                current=current.right
+            return current.item    
+    
+    def delete(self,data):#delete function
+        self.root=self.rdelete(self.root,data)  #rdelete check recursively for each node  
+    def rdelete(self,root,data):
+        if root is None:
+            return root
+        elif data<root.item:
+           root.left=self.rdelete(root.left,data)
+        elif data>root.item:
+            root.right=self.rdelete(root.right,data) 
+        #if root.item is equal to data then check 3 cases (1) if no child,(2) only one child,(3) two child
+        else: 
+            if root.left is None:
+             return root.right
+            elif root.right is None:
+             return root.left
+            else:#if two child exist then i choose greater elements of left subtree
+             root.item=self.max_value(root.left)
+             root.left=self.rdelete(root.left,root.item)
+        return root
+
+               
             #Preorder Traversal    
     def display1(self,root):
         if root is None:
@@ -58,16 +92,20 @@ class BST:
             self.display3(temp.right)
                                         
 bst=BST()  # root=None
-bst.insert(50)
-bst.insert(30)
+bst.insert(8)
+bst.insert(3)
+bst.insert(1)
+bst.insert(6)
+bst.insert(4)
+bst.insert(7)
 bst.insert(10)
-bst.insert(40)
-bst.insert(35)
-bst.insert(45)
-bst.insert(70)
-bst.insert(60)
-print(bst.search(300))
+bst.insert(14)
+bst.insert(13)
 
+print("In-order traversal before deletion:")
+bst.display3(bst.root)
 
-print("in order travsersal")
+bst.delete(6)
+
+print("In-order traversal after deletion: 6 ")
 bst.display3(bst.root)
