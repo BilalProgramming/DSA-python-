@@ -1,3 +1,4 @@
+# dictionary is implementation of hashmap
 class HashTable:
     def __init__(self):
         self.max=10
